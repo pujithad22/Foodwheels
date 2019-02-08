@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <!-- <script type="text/javascript" src="foodapp.js"></script>-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+   <style>
+    .size{
+        width: 300px;
+        height: 300px;
+        display: block;
+        padding-top: 40px;
+        margin-right: 20px;
+    }
+    ul {
+   white-space:nowrap;
+   overflow:auto
+    }
+
+    li{
+        display: inline-block;
+    }
+    #myul{
+        list-style-type:none;
+    }
+    
+    .txt{
+        padding-top: 10px;
+        display: block;
+        width: 300px;
+        font-size: 12px;
+    }
+    .cat{
+        display: block;
+        margin-bottom: 10px;
+    }
+    .nav-link{
+        float: right;
+    }
+    .first{
+        padding-left: 470px;
+    }
+    #search{
+        width:250px;
+    }
+    #cart{
+        display: none;
+    }
+    
+    </style>
+    <title>Food App</title>
+</head>
+<body>
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Category</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    <li class="nav-item ">
+                      <a class="nav-link"  onclick="starters('Dessert')" href="#"><b>Dessert</b> </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link"  onclick="starters('Starters')" href="#"><b>Starters</b></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link"  onclick="starters('Main course')" href="#"><b>Main course</b></a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" onclick="starters('Drinks')" href="#"><b>Drinks</b></a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" onclick="starters('Ice creams')" href="#"><b>Ice creams</b></a>
+                    </li>
+                   <li class="nav-item" >
+                        <form method="GET" action="/cart">
+                           
+                            <i class="fas fa-cart-plus fa-2x" style="margin-left:1300px;margin-top:10px;display:inline-block" ></i>
+                            <span class="badge badge-danger" id="notif" style="padding: 7px;">0</span>
+                    
+                            <button onclick="viewcart()" >cart</button>
+                        
+                         </form>  
+                         
+                   </li> 
+                   
+                  </ul>
+                </div>
+              </nav>
+              
+    <div class="first">  
+         <input type="text" id="search" placeholder="order your favourite dish..">
+         <a onclick="find()"><i class="fas fa-search"></i></a>
+      
+    </div>
+    <div id="cart">
+        <ul id="cartul">
+
+        </ul>
+
+    </div>
+   
+  
+    <ul id="myul">
+
+    </ul>
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+
+
+        <!--   ______________ JAVA SCRIPT ________________    -->
+
+<script type="text/javascript">
+    var arr1=[],arr2=[];
+    bit();
+    
+    function bit(){
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status==200){
+            let o=JSON.parse(xhttp.responseText)
+            console.log(o);
+            for(var i=0;i<o.recipes.length;i++)
+            {
+                document.getElementById("myul").innerHTML+="<li><img class='size' src="+o.recipes[i].image+"><p class='txt'>"+o.recipes[i].name+"</p><div class='cat'>"+o.recipes[i].category+"</div><button onclick='bag("+i+")'>Add to bag</button></li>";
+            }
+    }
+    };
+    
+        xhttp.open(
+            "GET",
+            "http://temp.dash.zeta.in/food.php",
+            true
+        );
+        xhttp.send();
+    
+    }
+    function find()
+    {
+    ul=document.getElementById("myul");
+    console.log(ul);
+    items=document.getElementById("myul").getElementsByTagName("li");
+    console.log(items);
+    for(i=0;i<items.length;i++)
+    {
+        console.log(document.getElementsByTagName('p')[i].innerHTML);
+        console.log(document.getElementById("search").value);
+        var name=document.getElementById("myul").getElementsByTagName('p')[i].innerHTML;
+        var isp=document.getElementById("search").value;
+       
+       if(name.indexOf(isp)!== -1)
+       {
+           document.getElementById("myul").getElementsByTagName('img')[i].style.display="block";
+           document.getElementById("myul").getElementsByTagName('div')[i].style.display="block";
+           document.getElementById("myul").getElementsByTagName('p')[i].style.display="block";
+           document.getElementById("myul").getElementsByTagName('button')[i].style.display="block";
+           console.log("found");
+       }
+       else
+       {
+            document.getElementById("myul").getElementsByTagName('img')[i].style.display="none";
+            document.getElementById("myul").getElementsByTagName('p')[i].style.display="none";
+            document.getElementById("myul").getElementsByTagName('div')[i].style.display="none";
+            document.getElementById("myul").getElementsByTagName('button')[i].style.display="none";
+            console.log("not found");
+       }
+       
+        console.log(isp);
+    }
+    }
+
+
+    function starters(pi)
+    {
+        ul=document.getElementById("myul");
+       // console.log(ul);
+        items=document.getElementById("myul").getElementsByTagName("li");
+       //sss console.log("starters entered");
+        console.log(pi);
+        for(i=0;i<items.length;i++)
+        {
+            var cate=document.getElementById("myul").getElementsByTagName('div')[i].innerHTML;
+            console.log("category is : "+cate);
+            if(cate==pi)
+            {
+                document.getElementById("myul").getElementsByTagName('img')[i].style.display="block";
+                document.getElementById("myul").getElementsByTagName('p')[i].style.display="block";
+                document.getElementById("myul").getElementsByTagName('div')[i].style.display="block";
+                document.getElementById("myul").getElementsByTagName('button')[i].style.display="block";
+                console.log("found");
+            }
+            else
+            {
+                document.getElementById("myul").getElementsByTagName('img')[i].style.display="none";
+                document.getElementById("myul").getElementsByTagName('p')[i].style.display="none";
+                document.getElementById("myul").getElementsByTagName('div')[i].style.display="none";
+                document.getElementById("myul").getElementsByTagName('button')[i].style.display="none";
+                console.log("not found");
+            }
+        }
+        
+        
+   }
+   var count=0;
+   function bag(num)
+   {
+       count++;
+       console.log(num);
+       console.log(document.getElementById('myul').getElementsByTagName('img')[num].src);
+       document.getElementById('notif').innerHTML=count;// document.getElementById('notif').innerHTML+1;
+       document.getElementById("cartul").innerHTML+="<li><img class='size' src="+document.getElementById('myul').getElementsByTagName('img')[num].src+"><p>"+document.getElementById('myul').getElementsByTagName('p')[num].innerHTML +"</li>";
+        arr1.push(document.getElementById('myul').getElementsByTagName('img')[num].src);
+        arr2.push(document.getElementById('myul').getElementsByTagName('p')[num].innerHTML);
+        console.log(arr1.length);
+        console.log(arr2.length);
+    }
+    function viewcart()
+    {
+        console.log("view cart entered");
+        localStorage.setItem("image", JSON.stringify(arr1));
+        localStorage.setItem("para", JSON.stringify(arr2));
+       
+        
+    }
+    
+</script>
+</html>

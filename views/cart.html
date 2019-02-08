@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <style>
+        .size{
+        width: 300px;
+        height: 300px;
+        display: block;
+        padding-top: 40px;
+        margin-right: 20px;
+    }
+    ul {
+   white-space:nowrap;
+   overflow:auto;
+   list-style-type:none;
+    }
+
+    li{
+        display: inline-block;
+    }
+        </style>
+        <title>cart</title>
+    </head>
+    <body>
+        <h1>!!Your Cart!!</h1>
+        <form method="GET" action="/">   
+                <button onclick="index.html">Continue shopping</button>
+        </form>
+
+        <div id="cart">
+                <ul id="cartul">
+        
+                </ul>
+        
+        </div>
+        
+        <!--  JAVA SCRIPT   -->
+        <script>
+            retrive();
+            function retrive()
+            {
+                var retrievedData1 = localStorage.getItem("image");
+                var larr1 = JSON.parse(retrievedData1);
+
+                var retrievedData2 = localStorage.getItem("para");
+                var larr2 = JSON.parse(retrievedData2);
+                console.log(larr1.length);
+                console.log("arr2 length is  "+larr2.length);
+                for(i=0;i<larr1.length;i++)
+                {
+                    console.log("length");
+                    document.getElementById("cartul").innerHTML+="<li><img class='size' src="+larr1[i]+"><p>"+larr2[i]+"<div><button>Buy now</button></div></li>";
+
+                }
+            }
+        </script>
+    </body>
+</html>
