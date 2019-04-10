@@ -1,7 +1,12 @@
-<html>
-    <head>
-        <style>
-        .size{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your CART</title>
+    <style>
+    .size{
         width: 300px;
         height: 300px;
         display: block;
@@ -9,49 +14,43 @@
         margin-right: 20px;
     }
     ul {
-   white-space:nowrap;
-   overflow:auto;
-   list-style-type:none;
+        white-space:nowrap;
+        overflow:auto
     }
 
     li{
         display: inline-block;
     }
+    #myul{
+        list-style-type:none;
+    }
+    
+    .txt{
+        padding-top: 10px;
+        display: block;
+        width: 300px;
+        font-size: 12px;
+    }
+    
         </style>
-        <title>cart</title>
-    </head>
-    <body>
+</head>
+<body>
         <h1>!!Your Cart!!</h1>
         <form method="GET" action="/">   
-                <button onclick="index.html">Continue shopping</button>
+            <button onclick="index.html">Continue shopping</button>
         </form>
 
-        <div id="cart">
-                <ul id="cartul">
+       
+                <ul id="myul">
+                <% for(var i=0;i<dbarr.length;i++){ %>
+                    <li>
+                        <img class='size' src=<%=dbarr[i].urlimage %> >
+                        <p class='text'><%=dbarr[i].name %></p>
+                    </li>
+                <% } %>
         
                 </ul>
         
-        </div>
-        
-        <!--  JAVA SCRIPT   -->
-        <script>
-            retrive();
-            function retrive()
-            {
-                var retrievedData1 = localStorage.getItem("image");
-                var larr1 = JSON.parse(retrievedData1);
-
-                var retrievedData2 = localStorage.getItem("para");
-                var larr2 = JSON.parse(retrievedData2);
-                console.log(larr1.length);
-                console.log("arr2 length is  "+larr2.length);
-                for(i=0;i<larr1.length;i++)
-                {
-                    console.log("length");
-                    document.getElementById("cartul").innerHTML+="<li><img class='size' src="+larr1[i]+"><p>"+larr2[i]+"<div><button>Buy now</button></div></li>";
-
-                }
-            }
-        </script>
-    </body>
+    
+</body>
 </html>

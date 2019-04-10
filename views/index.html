@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <style>
+      
     .size{
         width: 300px;
         height: 300px;
@@ -16,8 +17,8 @@
         margin-right: 20px;
     }
     ul {
-   white-space:nowrap;
-   overflow:auto
+        white-space:nowrap;
+        overflow:auto
     }
 
     li{
@@ -55,7 +56,7 @@
 </head>
 <body>
     
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">Category</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -80,10 +81,12 @@
                    <li class="nav-item" >
                         <form method="GET" action="/cart">
                            
-                            <i class="fas fa-cart-plus fa-2x" style="margin-left:1300px;margin-top:10px;display:inline-block" ></i>
+                            <i class="fas fa-cart-plus fa-2x" style="margin-left:1000px;margin-top:10px;display:inline-block" ></i>
                             <span class="badge badge-danger" id="notif" style="padding: 7px;">0</span>
-                    
-                            <button onclick="viewcart()" >cart</button>
+                            <input type='hidden' value="x" id='cart' name='cart'></input>
+                              <input type='hidden' value='x' id='para' name='para'></input>
+                            
+                              <input type='submit' onclick="viewcart()" value='cart'></button>
                         
                          </form>  
                          
@@ -91,7 +94,7 @@
                    
                   </ul>
                 </div>
-              </nav>
+            </nav>
               
     <div class="first">  
          <input type="text" id="search" placeholder="order your favourite dish..">
@@ -118,10 +121,10 @@
 
         <!--   ______________ JAVA SCRIPT ________________    -->
 
-<script type="text/javascript">
-    var arr1=[],arr2=[];
-    bit();
-    
+<script>
+var arr1=[],arr2=[];
+bit();
+
     function bit(){
         var xhttp=new XMLHttpRequest();
         xhttp.onreadystatechange=function(){
@@ -212,7 +215,8 @@
    var count=0;
    function bag(num)
    {
-       count++;
+       console.log("bag entered");
+        count++;
        console.log(num);
        console.log(document.getElementById('myul').getElementsByTagName('img')[num].src);
        document.getElementById('notif').innerHTML=count;// document.getElementById('notif').innerHTML+1;
@@ -221,15 +225,23 @@
         arr2.push(document.getElementById('myul').getElementsByTagName('p')[num].innerHTML);
         console.log(arr1.length);
         console.log(arr2.length);
+   
     }
     function viewcart()
     {
         console.log("view cart entered");
-        localStorage.setItem("image", JSON.stringify(arr1));
-        localStorage.setItem("para", JSON.stringify(arr2));
-       
+        console.log(arr1,arr2);
+      //  localStorage.setItem("image", JSON.stringify(arr1));
+       // localStorage.setItem("para", JSON.stringify(arr2));
+      
+        document.getElementById("cart").value=arr1;
+        document.getElementById("para").value=arr2;
+        document.getElementById("cart").style.display="block";
         
     }
     
+
 </script>
+
+ 
 </html>
